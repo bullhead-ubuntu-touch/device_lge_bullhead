@@ -43,7 +43,7 @@ dontaudit netmgrd self:capability sys_module;
 set_prop(netmgrd, net_radio_prop)
 
 # Permission to run netd commands
-allow netmgrd netd_socket:sock_file write;
+# allow netmgrd netd_socket:sock_file write;
 
 #Allow access to files associated with netd
 allow netmgrd net_data_file:file r_file_perms;
@@ -57,6 +57,8 @@ allow netmgrd sysfs:file write;
 allow netmgrd sysfs_usb:file write;
 
 allow netmgrd kernel:system module_request;
+
+allow netmgrd diag_device:chr_file rw_file_perms;
 
 # talk to cnd
 unix_socket_connect(netmgrd, cnd, cnd)

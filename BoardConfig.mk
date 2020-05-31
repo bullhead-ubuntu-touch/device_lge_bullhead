@@ -30,10 +30,14 @@ TARGET_2ND_CPU_VARIANT := cortex-a53.a57
 
 TARGET_NO_BOOTLOADER := true
 
+# Dex
+WITH_DEXPREOPT := true
+DONT_DEXPREOPT_PREBUILTS := true
+
 # Inline kernel
 BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
 TARGET_KERNEL_SOURCE := kernel/lge/bullhead
-TARGET_KERNEL_CONFIG := lineageos_bullhead_defconfig
+TARGET_KERNEL_CONFIG := gzr_defconfig
 
 TARGET_KERNEL_ARCH := arm64
 TARGET_KERNEL_HEADER_ARCH := arm64
@@ -48,7 +52,7 @@ BOARD_RAMDISK_OFFSET     := 0x02000000
 
 BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.hardware=bullhead boot_cpus=0-5
 BOARD_KERNEL_CMDLINE += lpm_levels.sleep_disabled=1 msm_poweroff.download_mode=0
-BOARD_KERNEL_CMDLINE += loop.max_part=7
+BOARD_KERNEL_CMDLINE += loop.max_part=7 androidboot.selinux=permissive
 
 BOARD_MKBOOTIMG_ARGS := --ramdisk_offset $(BOARD_RAMDISK_OFFSET) --tags_offset $(BOARD_KERNEL_TAGS_OFFSET)
 
@@ -72,6 +76,7 @@ BOARD_HOSTAPD_DRIVER := NL80211
 BOARD_HOSTAPD_PRIVATE_LIB := lib_driver_cmd_$(BOARD_WLAN_DEVICE)
 WIFI_DRIVER_FW_PATH_STA := "sta"
 WIFI_DRIVER_FW_PATH_AP  := "ap"
+WIFI_HIDL_FEATURE_DISABLE_AP_MAC_RANDOMIZATION := true
 
 BOARD_USES_SECURE_SERVICES := true
 
@@ -105,7 +110,7 @@ MAX_VIRTUAL_DISPLAY_DIMENSION := 2048
 VSYNC_EVENT_PHASE_OFFSET_NS := 2000000
 SF_VSYNC_EVENT_PHASE_OFFSET_NS := 6000000
 NUM_FRAMEBUFFER_SURFACE_BUFFERS := 3
-
+BOARD_ROOT_EXTRA_FOLDERS := persist firmware
 
 TARGET_AUX_OS_VARIANT_LIST := bullhead
 
@@ -129,7 +134,7 @@ BOARD_RECOVERYIMAGE_PARTITION_SIZE := 33554432
 BOARD_SYSTEMIMAGE_PARTITION_SIZE := 3221225472
 BOARD_SYSTEMIMAGE_JOURNAL_SIZE := 0
 # as of 3765008, inode usage was 3011, use 4096 to be safe
-BOARD_SYSTEMIMAGE_EXTFS_INODE_COUNT := 4096
+BOARD_SYSTEMIMAGE_EXTFS_INODE_COUNT := 6144
 BOARD_USERDATAIMAGE_PARTITION_SIZE := 11649679360
 BOARD_CACHEIMAGE_PARTITION_SIZE := 100663296
 BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := ext4
@@ -139,6 +144,8 @@ BOARD_FLASH_BLOCK_SIZE := 131072
 
 # Build a separate vendor.img
 TARGET_COPY_OUT_VENDOR := vendor
+BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
+BOARD_VENDORIMAGE_PARTITION_SIZE := 260046848
 
 TARGET_RECOVERY_FSTAB = device/lge/bullhead/fstab.bullhead
 
@@ -153,16 +160,22 @@ BOARD_SEPOLICY_DIRS += \
     device/lge/bullhead/sepolicy
 
 TARGET_USES_64_BIT_BINDER := true
-
+TARGET_FLATTEN_APEX := true
 TARGET_USES_AOSP := true
 TARGET_USES_INTERACTION_BOOST := true
 
 TARGET_RECOVERY_UI_LIB := librecovery_ui_nanohub
 
+# Netd
+TARGET_OMIT_NETD_TETHER_FTP_HELPER := true
+
 # Force camera module to be compiled only in 32-bit mode on 64-bit systems
 # Once camera module can run in the native mode of the system (either
 # 32-bit or 64-bit), the following line should be deleted
 BOARD_QTI_CAMERA_32BIT_ONLY := true
+
+# Graphics
+TARGET_ADDITIONAL_GRALLOC_10_USAGE_BITS := 0x2000U | 0x02000000U
 
 #Enable peripheral manager
 TARGET_PER_MGR_ENABLED := true
@@ -185,3 +198,7 @@ ifeq ($(TARGET_PRODUCT),bullhead_svelte)
 BOARD_KERNEL_CMDLINE += mem=1024M
 MALLOC_SVELTE := true
 endif
+
+# Legacy blob support
+TARGET_PROCESS_SDK_VERSION_OVERRIDE += \
+    /vendor/bin/mm-qcamera-daemon=27
