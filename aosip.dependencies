@@ -1,6 +1,6 @@
 [
   {
-    "repository": "android_kernel_lge_bullhead",
+    "repository": "kernel_lge_bullhead",
     "target_path": "kernel/lge/bullhead"
   }
 ]
