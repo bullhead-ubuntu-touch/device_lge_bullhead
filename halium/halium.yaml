@@ -1,0 +1,19 @@
+angler:
+  Vendor: Google
+  PrettyName: Nexus 6P
+  DeviceType: phone
+  GridUnit: 27
+  SupportedOrientations:
+    - Portrait
+    - Landscape
+    - InvertedLandscape
+  DoubleTapToWake:
+    - /sys/devices/soc.0/f9924000.i2c/i2c-2/2-0070/input/input0/wake_gesture|1|0
+  MirAndroidPlatformClientEglFlush:
+    - "!/usr/bin/unity8,!/usr/bin/lomiri,all"
+  MirAndroidPlatformServerEglSync:
+    - false
+  MirAndroidPlatformServerPartialUpdates:
+    - true
+  LomiriInteractiveBlur:
+    - true

@@ -462,3 +462,9 @@ service devstart_sh /system/bin/init.qcom.devstart.sh
     group root system
     disabled
     oneshot
+
+service init_wlan_bt /system/bin/sh /system/bin/init_wlan_bt.sh
+    class main
+    user root
+    group root
+    oneshot

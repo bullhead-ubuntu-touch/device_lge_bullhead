@@ -3,10 +3,11 @@ TARGET_SCREEN_HEIGHT := 1920
 TARGET_SCREEN_WIDTH := 1080
 
 # Inherit some common aoscp stuff.
-$(call inherit-product, vendor/aosip/config/common_full_phone.mk)
+#$(call inherit-product, vendor/aosip/config/common_full_phone.mk)
 
 # Inherit device configuration
 $(call inherit-product, device/lge/bullhead/aosp_bullhead.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/halium.mk)
 
 ## Device identifier. This must come after all inclusions
 PRODUCT_NAME := aosip_bullhead
