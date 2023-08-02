@@ -16,6 +16,7 @@
 
 PRODUCT_MAKEFILES := \
     $(LOCAL_DIR)/aosip_bullhead.mk \
+    $(LOCAL_DIR)/lineage_bullhead.mk
 
 COMMON_LUNCH_CHOICES := \
     aosip_bullhead-userdebug \
