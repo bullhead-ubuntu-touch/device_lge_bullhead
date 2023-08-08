@@ -34,7 +34,7 @@ LOCAL_32_BIT_ONLY := $(BOARD_QTI_CAMERA_32BIT_ONLY)
 LOCAL_MODULE           := mm-jpeg-interface-test
 LOCAL_PRELINK_MODULE   := false
 LOCAL_SHARED_LIBRARIES := libcutils libdl libmmjpeg_interface liblog
-
+LOCAL_VENDOR_MODULE := true
 include $(BUILD_EXECUTABLE)
 
 

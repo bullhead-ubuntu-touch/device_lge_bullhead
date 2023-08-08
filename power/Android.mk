@@ -25,4 +25,5 @@ endif
 
 LOCAL_MODULE := power.bullhead
 LOCAL_MODULE_TAGS := optional
+LOCAL_VENDOR_MODULE := true
 include $(BUILD_SHARED_LIBRARY)

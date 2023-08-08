@@ -98,7 +98,7 @@ on early-boot
     verity_update_state
 
     # Busy loop to wait for devices booted by devstart_sh just in case device not ready
-    exec - root root system -- /system/bin/init.qcom.devwait.sh
+    exec - root root system -- /vendor/bin/init.qcom.devwait.sh
 
 on boot
     # execute script to set initial CPU settings
@@ -197,7 +197,7 @@ on post-fs
 
     start qseecomd
     # Busy loop to wait for qseecomd started
-    exec - root root system -- /system/bin/init.bullhead.qseecomd.sh
+    exec - root root system -- /vendor/bin/init.bullhead.qseecomd.sh
     # Start devices by sysfs trigger
     start devstart_sh
 
@@ -238,8 +238,18 @@ on post-fs-data
     # NFC: create data/nfc for nv storage
     mkdir /data/vendor/nfc 0770 nfc nfc
 
+    # TREBLE: CREATE VENDOR RELATED DIRECTORIES
+    mkdir /data/vendor/camera 0770 camera camera
+i   mkdir /data/vendor/wifi 0771 wifi wifi
+    mkdir /data/vendor/wifi/wpa 0770 wifi wifi
+    mkdir /data/vendor/wifi/wpa/sockets 0770 wifi wifi
+    mkdir /data/vendor/audio 0770 audio audio
+    mkdir /data/vendor/audio/acdbdata 0770 media audio
+    mkdir /data/vendor/audio/acdbdata/delta 0770 media audio
+
+
     # use qcril.db to handle Ecc and load MBN
-    copy /system/etc/qcril.db /data/misc/radio/qcril.db
+    copy /vendor/etc/qcril.db /data/misc/radio/qcril.db
     chown radio radio /data/misc/radio/qcril.db
     chmod 0600 /data/misc/radio/qcril.db
 
@@ -273,66 +283,66 @@ on post-fs-data
 
     setprop vold.post_fs_data_done 1
 
-service irsc_util /system/bin/irsc_util "/etc/sec_config"
+service vendor.irsc_util /vendor/bin/irsc_util "/vendor/etc/sec_config"
     class main
     user root
     oneshot
 
-service rmt_storage /system/bin/rmt_storage
+service vendor.rmt_storage /vendor/bin/rmt_storage
     class core
     user root
     group system wakelock
     shutdown critical
 
-service start_hci_filter /vendor/bin/wcnss_filter
+service vendor.start_hci_filter /vendor/bin/wcnss_filter
     class late_start
     user bluetooth
     group bluetooth system
     disabled
 
 on property:wc_transport.start_hci=true
-    start start_hci_filter
+    start vendor.start_hci_filter
 
 on property:wc_transport.start_hci=false
-    stop start_hci_filter
+    stop vendor.start_hci_filter
 
 # QMUX must be in multiple groups to support external process connections
-service qmuxd /system/bin/qmuxd
+service vendor.qmuxd /vendor/bin/qmuxd
     class main
     user radio
     group radio audio bluetooth wakelock gps
 
-service perfd /system/bin/perfd
+service vendor.perfd /vendor/bin/perfd
     class main
     user root
     group system
     writepid /dev/cpuset/system-background/tasks
 
-service qti /system/vendor/bin/qti
+service vendor.perfd /vendor/bin/perfd
     class main
     user radio
     group radio net_raw diag usb net_admin
 
-service netmgrd /system/bin/netmgrd
+service vendor.netmgrd /vendor/bin/netmgrd
     class main
     group radio system wakelock
 
-service per_mgr /system/bin/pm-service
+service vendor.per_mgr /vendor/bin/pm-service
     class core
     user system
     group system net_raw
 
-service per_proxy /system/bin/pm-proxy
+service vendor.per_proxy /vendor/bin/pm-proxy
     class core
     user system
     group system net_raw
     disabled
 
 on property:init.svc.per_mgr=running
-    start per_proxy
+    start vendor.per_proxy
 
 on property:sys.shutdown.requested=*
-    stop per_proxy
+    stop vendor.per_proxy
 
 on property:ro.boot.hardware.sku=LGH790
     setprop ro.boot.wificountrycode US
@@ -346,7 +356,7 @@ on property:ro.boot.hardware.sku=LGH791F
 on property:ro.boot.hardware.sku=LGH798
     setprop ro.boot.wificountrycode 00
 
-service thermal-engine /system/bin/thermal-engine
+service vendor.thermal-engine /vendor/bin/thermal-engine
     class main
     user root
     socket thermal-send-client stream 0666 system system
@@ -369,12 +379,12 @@ service wpa_supplicant /vendor/bin/hw/wpa_supplicant \
     disabled
     oneshot
 
-service loc_launcher /system/bin/loc_launcher
+service vendor.loc_launcher /vendor/bin/loc_launcher
     #loc_launcher will start as root and set its uid to gps
     class late_start
     group gps inet net_raw diag net_admin wifi
 
-service cnss-daemon /system/bin/cnss-daemon -n -l
+service vendor.cnss-daemon /vendor/bin/cnss-daemon -n -l
     class late_start
 
 service qseecomd /vendor/bin/qseecomd
@@ -382,14 +392,14 @@ service qseecomd /vendor/bin/qseecomd
     user root
     group root
 
-service msm_irqbalance /system/bin/msm_irqbalance -f /vendor/etc/msm_irqbalance.conf
+service vendor.msm_irqbalance /vendor/bin/msm_irqbalance -f /vendor/etc/msm_irqbalance.conf
     socket msm_irqbalance seqpacket 660 root system
     class core
     user root
     group root
     writepid /dev/cpuset/system-background/tasks
 
-service time_daemon /system/bin/time_daemon
+service vendor.time_daemon /vendor/bin/time_daemon
     class late_start
     user root
     group root
@@ -399,41 +409,41 @@ service charger /charger
     critical
     seclabel u:r:charger:s0
 
-service qcamerasvr /vendor/bin/mm-qcamera-daemon
+service vendor.qcamerasvr /vendor/bin/mm-qcamera-daemon
     class late_start
     user camera
     group camera system inet input graphics
     writepid /dev/cpuset/system-background/tasks
 
 on property:persist.radio.atfwd.start=false
-    stop atfwd
+    stop vendor.atfwd
 
-service atfwd /system/bin/ATFWD-daemon
+service vendor.atfwd /vendor/bin/ATFWD-daemon
     class late_start
     user system
     group system radio
 
 #on property:ro.debuggable=1
-#    start ss_ramdump
+#    start vendor.ss_ramdump
 
-service ss_ramdump /system/bin/subsystem_ramdump
+service vendor.ss_ramdump /vendor/bin/subsystem_ramdump
     class main
     user root
     group root system
     disabled
 
-service cnd /system/bin/cnd
+service vendor.cnd /vendor/bin/cnd
     class late_start
     socket cnd stream 660 root inet
     group root wakelock
 
-service imsqmidaemon /system/bin/imsqmidaemon
+service vendor.imsqmidaemon /vendor/bin/imsqmidaemon
     class main
     user system
     socket ims_qmid stream 0660 system radio
     group radio net_raw log diag
 
-service imsdatadaemon /system/bin/imsdatadaemon
+service vendor.imsdatadaemon /vendor/bin/imsdatadaemon
     class main
     user system
     socket ims_datad stream 0660 system radio
@@ -443,7 +453,7 @@ service imsdatadaemon /system/bin/imsdatadaemon
 on property:sys.ims.QMI_DAEMON_STATUS=1
     start imsdatadaemon
 
-service bullhead-sh /system/bin/init.bullhead.sh
+service vendor.bullhead-sh /vendor/bin/init.bullhead.sh
     class late_start
     user radio
     group system
@@ -456,14 +466,14 @@ service bugreport /system/bin/dumpstate -d -p -B -z \
     disabled
     oneshot
 
-service devstart_sh /system/bin/init.qcom.devstart.sh
+service vendor.devstart_sh /vendor/bin/init.qcom.devstart.sh
     class main
     user root
     group root system
     disabled
     oneshot
 
-service init_wlan_bt /system/bin/sh /system/bin/init_wlan_bt.sh
+service init_wlan_bt /vendor/bin/init_wlan_bt.sh
     class main
     user root
     group root

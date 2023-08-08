@@ -9,5 +9,5 @@ include $(CLEAR_VARS)
 
 LOCAL_COPY_HEADERS_TO := time-services
 LOCAL_COPY_HEADERS := ./time_genoff.h
-
+LOCAL_VENDOR_MODULE := true
 include $(BUILD_COPY_HEADERS)
