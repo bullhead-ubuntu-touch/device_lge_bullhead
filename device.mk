@@ -671,7 +671,16 @@ PRODUCT_PACKAGES += \
     vendor.camera-provider-2-4 \
     android.hardware.graphics.mapper@2.0-impl \
     android.hardware.sensors@2.0 \
-    android.hardware.sensors@2.1
+    android.hardware.sensors@2.1 \
+    android.hardware.gnss@1.0 \
+    android.hardware.gnss@1.0-service \
+    android.hardware.sensors@2.0-service \
+    android.hardware.sensors@2.0 \
+    android.hardware.radio@1.2-service \
+    android.hardware.radio@1.2 \
+    android.hardware.gnss@1.1-service \
+    android.hardware.gnss@1.1 
+   
 
 # Ubuntu
 PRODUCT_PACKAGES += \
@@ -693,20 +702,13 @@ PRODUCT_PACKAGES += \
 #Halium
 # UBPorts Udev rules
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/halium/70-android.rules:system/halium/lib/udev/rules.d/70-android.rules \
-    $(LOCAL_PATH)/halium/70-android.rules:system/halium/usr/lib/lxc-android-config/70-android.rules \
-    $(LOCAL_PATH)/halium/70-android.rules:system/halium/etc/udev/rules.d/70-android.rules \
-    $(LOCAL_PATH)/halium/rsyslog.conf:system/halium/etc/rsyslog.conf \
-    $(LOCAL_PATH)/halium/ril_subscription.conf:system/halium/etc/ofono/ril_subscription.conf \
-    $(LOCAL_PATH)/halium/apparmor.d/abstractions/base:system/halium/etc/apparmor.d/abstractions/base \
-    $(LOCAL_PATH)/halium/display.conf:system/halium/etc/ubuntu-touch-session.d/android.conf \
-    $(LOCAL_PATH)/halium/config-default.xml:system/halium/usr/share/powerd/device_configs/config-default.xml \
+    $(LOCAL_PATH)/halium/lib/udev/rules.d/70-android.rules:system/halium/lib/udev/rules.d/70-android.rules \
+    $(LOCAL_PATH)/halium/etc/default/usb-moded.d/device-specific-config.conf:system/halium/etc/usb-moded.d/device-specific-config.conf \
+    $(LOCAL_PATH)/halium/etc/deviceinfo/devices/halium.yaml:system/halium/deviceinfo/devices/halium.yaml \
+    $(LOCAL_PATH)/halium/etc/ubuntu-touch-session.d/android.conf:system/halium/etc/ubuntu-touch-session.d/android.conf \
+    $(LOCAL_PATH)/halium/usr/share/repowerd/config-default.xml:system/halium/usr/share/repowerd/config-default.xml \
     $(LOCAL_PATH)/crash_dump.arm.policy:system/etc/seccomp_policy/crash_dump.arm.policy \
-    $(LOCAL_PATH)/halium/etc/pulse/touch-android9.pa:system/halium/etc/pulse/touch-android9.pa \
-    $(LOCAL_PATH)/halium/usensord.conf:system/halium/usr/share/upstart/sessions/usensord.conf \
-    $(LOCAL_PATH)/halium/apparmor.d/local/usr.bin.media-hub-server:system/halium/etc/apparmor.d/local/usr.bin.media-hub-server \
-    $(LOCAL_PATH)/halium/device-hacks.conf:system/halium/etc/init/device-hacks.conf \
-
+    
 # Configs
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/halium/init_wlan_bt.sh:system/bin/init_wlan_bt.sh

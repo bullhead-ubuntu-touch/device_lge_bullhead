@@ -1,0 +1,21 @@
+bullhead:
+  Names:
+    - Nexus 5X
+    - bullhead
+    - LG Nexus 5X
+
+  PrettyName: LG Nexus 5X
+  DeviceType: phone
+  GridUnit: 22
+  SupportedOrientations:
+    - Portrait
+    - Landscape
+    - InvertedLandscape
+  MirAndroidPlatformClientEglFlush:
+    - "!/usr/bin/lomiri,all"
+  MirAndroidPlatformServerEglSync:
+    - false
+  MirAndroidPlatformServerPartialUpdates:
+    - true
+  LomiriInteractiveBlur:
+    - true
