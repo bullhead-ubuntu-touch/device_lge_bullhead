@@ -19,7 +19,8 @@ enable_bt () {
 
 while true; do
     sleep 2
-    if [ ! -f /sys/devices/pci0000:00/0000:00:00.0/0000:01:00.0/net/rename*/address ]; then
+    if [ ! -f /sys/devices/pci0000:00/0000:00:00.0/0000:01:00.0/net/wlp1s0/address ]; then
+    	echo 1 > /dev/wcnss_wlan
         echo sta > /sys/module/wlan/parameters/fwpath
     else
         # enable bluetooth here since we have to wait for wlan to be initialized

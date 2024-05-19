@@ -336,7 +336,8 @@ PRODUCT_PACKAGES += \
 
 # For wlan_mac.bin symlink
 PRODUCT_PACKAGES += \
-    bullhead_wlan_mac
+    bullhead_wlan_mac \
+    bullhead_wlan_mac_halium
 
 DEVICE_PACKAGE_OVERLAYS := \
     device/lge/bullhead/overlay
@@ -708,6 +709,7 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/halium/etc/ubuntu-touch-session.d/android.conf:system/halium/etc/ubuntu-touch-session.d/android.conf \
     $(LOCAL_PATH)/halium/usr/share/repowerd/config-default.xml:system/halium/usr/share/repowerd/config-default.xml \
     $(LOCAL_PATH)/crash_dump.arm.policy:system/etc/seccomp_policy/crash_dump.arm.policy \
+    $(LOCAL_PATH)/halium/init_wlan_bt.sh:system/bin/init_wlan_bt.s \
     
 # Configs
 PRODUCT_COPY_FILES += \
