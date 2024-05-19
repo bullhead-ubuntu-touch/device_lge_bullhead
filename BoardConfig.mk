@@ -48,7 +48,7 @@ BOARD_RAMDISK_OFFSET     := 0x02000000
 
 BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.hardware=bullhead boot_cpus=0-5
 BOARD_KERNEL_CMDLINE += lpm_levels.sleep_disabled=1 msm_poweroff.download_mode=0
-BOARD_KERNEL_CMDLINE += loop.max_part=7 console=tty0
+BOARD_KERNEL_CMDLINE += loop.max_part=7 console=tty0 selinux=0 apparmor=1
 
 BOARD_MKBOOTIMG_ARGS := --ramdisk_offset $(BOARD_RAMDISK_OFFSET) --tags_offset $(BOARD_KERNEL_TAGS_OFFSET)
 
@@ -154,7 +154,7 @@ BOARD_VENDOR_QCOM_LOC_PDK_FEATURE_SET := true
 BOARD_ROOT_EXTRA_FOLDERS += firmware persist
 
 BOARD_SEPOLICY_DIRS += \
-    device/lge/bullhead/sepolicy-minimal
+    device/lge/bullhead/sepolicy
 
 TARGET_USES_64_BIT_BINDER := true
 
