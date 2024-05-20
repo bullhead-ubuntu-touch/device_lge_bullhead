@@ -677,8 +677,6 @@ PRODUCT_PACKAGES += \
     android.hardware.gnss@1.0-service \
     android.hardware.sensors@2.0-service \
     android.hardware.sensors@2.0 \
-    android.hardware.radio@1.2-service \
-    android.hardware.radio@1.2 \
     android.hardware.gnss@1.1-service \
     android.hardware.gnss@1.1 
    
@@ -704,11 +702,12 @@ PRODUCT_PACKAGES += \
 # UBPorts Udev rules
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/halium/lib/udev/rules.d/70-android.rules:system/halium/lib/udev/rules.d/70-android.rules \
-    $(LOCAL_PATH)/halium/etc/default/usb-moded.d/device-specific-config.conf:system/halium/etc/usb-moded.d/device-specific-config.conf \
+    $(LOCAL_PATH)/halium/etc/default/usb-moded.d/device-specific-config.conf:system/halium/etc/default/usb-moded.d/device-specific-config.conf \
     $(LOCAL_PATH)/halium/etc/deviceinfo/devices/halium.yaml:system/halium/deviceinfo/devices/halium.yaml \
     $(LOCAL_PATH)/halium/etc/ubuntu-touch-session.d/android.conf:system/halium/etc/ubuntu-touch-session.d/android.conf \
     $(LOCAL_PATH)/halium/usr/share/repowerd/config-default.xml:system/halium/usr/share/repowerd/config-default.xml \
     $(LOCAL_PATH)/crash_dump.arm.policy:system/etc/seccomp_policy/crash_dump.arm.policy \
+    $(LOCAL_PATH)/halium/etc/ofono/ril_subscription.conf:system/halium/etc/ofono/ril_subscription.conf \
     $(LOCAL_PATH)/halium/init_wlan_bt.sh:system/bin/init_wlan_bt.s \
     
 # Configs
