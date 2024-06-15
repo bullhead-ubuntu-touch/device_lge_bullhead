@@ -599,5 +599,31 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.facelock.rec_timeout=3500 \
     ro.facelock.est_max_time=600
 
+# UBPorts overlay files
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/ubuntu/70-android.rules:system/halium/lib/udev/rules.d/70-android.rules \
+    $(LOCAL_PATH)/ubuntu/device-specific-config.conf:system/halium/etc/default/usb-moded.d/device-specific-config.conf \
+    $(LOCAL_PATH)/ubuntu/halium.yaml:system/halium/etc/deviceinfo/devices/halium.yaml \
+    $(LOCAL_PATH)/ubuntu/android.conf:system/halium/etc/ubuntu-touch-session.d/android.conf \
+    $(LOCAL_PATH)/ubuntu/crash_dump.arm.policy:system/etc/seccomp_policy/crash_dump.arm.policy \
+    $(LOCAL_PATH)/ubuntu/config-default.xml:system/halium/usr/share/repowerd/device-configs/config-default.xml \
+    $(LOCAL_PATH)/ubuntu/ril_subscription.conf:system/halium/etc/ofono/ril_subscription.conf \
+    $(LOCAL_PATH)/ubuntu/main.conf:system/halium/etc/bluetooth/main.conf
+    
+# Additional Android stuff for Ubuntu Touch
+PRODUCT_PACKAGES += \
+    libmedia_compat \
+    minimediaservice \
+    libaudioflingerglue \
+    libminisf \
+    miniafservice \
+    libhfd_api \
+    libtime_genoff
+
+# Missing libs for system
+PRODUCT_PACKAGES += \
+    rild \
+    android.hardware.bluetooth@1.0-service
+    
 $(call inherit-product-if-exists, hardware/qcom/msm8994/msm8992.mk)
 $(call inherit-product-if-exists, vendor/qcom/gpu/msm8994/msm8994-gpu-vendor.mk)
